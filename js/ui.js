@@ -3,10 +3,20 @@ let selectedCell = null;
 let currentPuzzle = [];
 let initialGrid = [];
 
-function newGame(difficulty) {
+function startGame(difficulty) {
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    document.getElementById('difficulty-label').innerText = difficulty;
+    
+    selectedCell = null;
     currentPuzzle = sudokuGame.generate(difficulty);
     initialGrid = [...currentPuzzle];
     renderGrid();
+}
+
+function showHome() {
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('game-screen').classList.add('hidden');
 }
 
 function renderGrid() {
@@ -47,18 +57,16 @@ function inputNumber(num) {
     currentPuzzle[selectedCell] = num === 0 ? 0 : num;
     renderGrid();
 
-    // Check if solved
     if (!currentPuzzle.includes(0)) {
         if (isSolved()) {
-            setTimeout(() => alert('Congratulations! You solved it!'), 100);
+            setTimeout(() => {
+                alert('Congratulations! You solved it!');
+                showHome();
+            }, 100);
         }
     }
 }
 
 function isSolved() {
-    // Basic check against the solution stored in the Sudoku class
     return currentPuzzle.every((val, i) => val === sudokuGame.solution[i]);
 }
-
-// Start a game by default
-newGame('easy');

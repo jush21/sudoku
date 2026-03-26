@@ -11,27 +11,38 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sudoku</h1>
-        
-        <div class="difficulty-selector">
-            <button onclick="newGame('easy')">Easy</button>
-            <button onclick="newGame('medium')">Medium</button>
-            <button onclick="newGame('hard')">Hard</button>
+        <!-- Home Page Screen -->
+        <div id="home-screen" class="screen">
+            <h1>Sudoku</h1>
+            <p>Select Difficulty</p>
+            <div class="menu-buttons">
+                <button class="menu-btn easy" onclick="startGame('easy')">Easy</button>
+                <button class="menu-btn medium" onclick="startGame('medium')">Medium</button>
+                <button class="menu-btn hard" onclick="startGame('hard')">Hard</button>
+            </div>
         </div>
 
-        <div id="sudoku-grid" class="grid"></div>
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <div class="game-header">
+                <button class="back-btn" onclick="showHome()">← Back</button>
+                <span id="difficulty-label">Easy</span>
+            </div>
+            
+            <div id="sudoku-grid" class="grid"></div>
 
-        <div class="number-pad">
-            <button onclick="inputNumber(1)">1</button>
-            <button onclick="inputNumber(2)">2</button>
-            <button onclick="inputNumber(3)">3</button>
-            <button onclick="inputNumber(4)">4</button>
-            <button onclick="inputNumber(5)">5</button>
-            <button onclick="inputNumber(6)">6</button>
-            <button onclick="inputNumber(7)">7</button>
-            <button onclick="inputNumber(8)">8</button>
-            <button onclick="inputNumber(9)">9</button>
-            <button onclick="inputNumber(0)">⌫</button>
+            <div class="number-pad">
+                <button onclick="inputNumber(1)">1</button>
+                <button onclick="inputNumber(2)">2</button>
+                <button onclick="inputNumber(3)">3</button>
+                <button onclick="inputNumber(4)">4</button>
+                <button onclick="inputNumber(5)">5</button>
+                <button onclick="inputNumber(6)">6</button>
+                <button onclick="inputNumber(7)">7</button>
+                <button onclick="inputNumber(8)">8</button>
+                <button onclick="inputNumber(9)">9</button>
+                <button onclick="inputNumber(0)">⌫</button>
+            </div>
         </div>
     </div>
 

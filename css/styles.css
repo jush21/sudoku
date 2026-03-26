@@ -6,6 +6,14 @@
     --cell-border: #dee2e6;
     --cell-selected: #e2e6ea;
     --cell-fixed: #adb5bd;
+    --easy-color: #28a745;
+    --medium-color: #ffc107;
+    --hard-color: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -16,30 +24,75 @@ body {
     padding: 20px;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 400px;
     width: 100%;
+}
+
+.screen {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Home Screen */
+#home-screen {
     text-align: center;
+    padding-top: 50px;
 }
 
-h1 {
-    margin-bottom: 20px;
+#home-screen h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
 }
 
-.difficulty-selector {
-    margin-bottom: 20px;
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
 }
 
-.difficulty-selector button {
-    padding: 10px 15px;
-    margin: 0 5px;
+.menu-btn {
+    padding: 20px;
+    font-size: 1.2rem;
     border: none;
-    border-radius: 5px;
-    background-color: var(--primary-color);
+    border-radius: 12px;
     color: white;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.easy { background-color: var(--easy-color); }
+.medium { background-color: var(--medium-color); color: #333; }
+.hard { background-color: var(--hard-color); }
+
+/* Game Screen */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--cell-border);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#difficulty-label {
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
 .grid {
@@ -47,7 +100,9 @@ h1 {
     grid-template-columns: repeat(9, 1fr);
     border: 2px solid var(--grid-border);
     margin: 0 auto 20px;
+    width: 100%;
     max-width: 360px;
+    background: white;
 }
 
 .cell {
@@ -58,9 +113,9 @@ h1 {
     justify-content: center;
     font-size: 1.2rem;
     cursor: pointer;
+    user-select: none;
 }
 
-/* Sub-grid borders */
 .cell:nth-child(3n) { border-right: 2px solid var(--grid-border); }
 .cell:nth-child(9n) { border-right: 1px solid var(--cell-border); }
 .cell:nth-child(n+19):nth-child(-n+27),
@@ -68,7 +123,6 @@ h1 {
 
 .cell.selected { background-color: var(--cell-selected); }
 .cell.fixed { font-weight: bold; color: #000; }
-.cell.error { color: #dc3545; }
 
 .number-pad {
     display: grid;
@@ -82,10 +136,12 @@ h1 {
     font-size: 1.1rem;
     border: 1px solid var(--cell-border);
     background: white;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .number-pad button:active {
     background-color: var(--cell-selected);
+    transform: translateY(2px);
 }
