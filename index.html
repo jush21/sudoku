@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sudoku PWA</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Sudoku PWA (v2)</title>
+    <link rel="stylesheet" href="css/styles_v2.css">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +14,7 @@
         <!-- Home Page Screen -->
         <div id="home-screen" class="screen">
             <h1>Sudoku</h1>
-            <p>Select Difficulty (v1.1)</p>
+            <p>Select Difficulty (v1.2 - FORCE REFRESH)</p>
             <div class="menu-buttons">
                 <button class="menu-btn easy" onclick="startGame('easy')">Easy</button>
                 <button class="menu-btn medium" onclick="startGame('medium')">Medium</button>
@@ -46,8 +46,8 @@
         </div>
     </div>
 
-    <script src="js/sudoku.js"></script>
-    <script src="js/ui.js"></script>
+    <script src="js/sudoku_v2.js"></script>
+    <script src="js/ui_v2.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
