@@ -162,7 +162,7 @@ body.game-bg::before {
 .grid {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    border: 3px solid var(--grid-border);
+    grid-template-rows: repeat(9, 1fr);
     background: var(--grid-border);
     gap: 1px;
     width: 100%;
@@ -194,11 +194,11 @@ body.game-bg::before {
 .cell.fixed { font-weight: 900; color: #0f172a; background: #f8fafc; }
 .cell.user-val { color: var(--primary-color); font-weight: 700; }
 
-/* Sub-grid thick borders */
-.cell:nth-child(3n) { border-right: 2px solid var(--grid-border); }
-.cell:nth-child(9n) { border-right: none; }
+/* Sub-grid thick gaps using margins */
+.cell:nth-child(3n) { margin-right: 2px; }
+.cell:nth-child(9n) { margin-right: 0; }
 .cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 3px solid var(--grid-border); }
+.cell:nth-child(n+46):nth-child(-n+54) { margin-bottom: 2px; }
 
 .number-pad {
     display: grid;
