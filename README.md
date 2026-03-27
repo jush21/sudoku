@@ -1,2 +1,1 @@
-# Sudoku PWA
-Initial project structure.
+# Sudoku Project Reset
