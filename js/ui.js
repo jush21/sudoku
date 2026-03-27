@@ -4,7 +4,6 @@ let initialGrid = [];
 let selectedCell = null;
 let currentDifficulty = '';
 
-// Load game from storage on startup
 window.onload = () => {
     const saved = localStorage.getItem('sudoku_save');
     if (saved) {
@@ -14,12 +13,29 @@ window.onload = () => {
         currentDifficulty = data.difficulty;
         game.solution = data.solution;
         
-        document.getElementById('home-screen').classList.add('hidden');
-        document.getElementById('game-screen').classList.remove('hidden');
-        document.getElementById('difficulty-label').innerText = currentDifficulty.toUpperCase();
+        applyGameUI(currentDifficulty);
         renderGrid();
+    } else {
+        applyHomeUI();
     }
 };
+
+function applyHomeUI() {
+    document.body.className = 'home-bg';
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('game-screen').classList.add('hidden');
+}
+
+function applyGameUI(difficulty) {
+    document.body.className = 'game-bg';
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    
+    const label = document.getElementById('difficulty-label');
+    label.innerText = difficulty.toUpperCase();
+    label.className = ''; // Reset classes
+    label.classList.add(difficulty);
+}
 
 function saveGame() {
     localStorage.setItem('sudoku_save', JSON.stringify({
@@ -32,9 +48,7 @@ function saveGame() {
 
 function startGame(difficulty) {
     currentDifficulty = difficulty;
-    document.getElementById('home-screen').classList.add('hidden');
-    document.getElementById('game-screen').classList.remove('hidden');
-    document.getElementById('difficulty-label').innerText = difficulty.toUpperCase();
+    applyGameUI(difficulty);
     
     selectedCell = null;
     currentPuzzle = game.generate(difficulty);
@@ -46,9 +60,8 @@ function startGame(difficulty) {
 }
 
 function showHome() {
-    localStorage.removeItem('sudoku_save'); // Clear save when quitting
-    document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('game-screen').classList.add('hidden');
+    localStorage.removeItem('sudoku_save');
+    applyHomeUI();
 }
 
 window.onpopstate = function(event) {
@@ -88,7 +101,7 @@ function renderGrid() {
 function inputNumber(num) {
     if (selectedCell === null) return;
     currentPuzzle[selectedCell] = num;
-    saveGame(); // Save every move
+    saveGame();
     renderGrid();
     
     if (!currentPuzzle.includes(0)) {
@@ -101,7 +114,6 @@ function inputNumber(num) {
     }
 }
 
-// Keyboard support
 document.addEventListener('keydown', (e) => {
     if (document.getElementById('game-screen').classList.contains('hidden')) return;
     if (selectedCell === null) return;
@@ -109,7 +121,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key >= '1' && e.key <= '9') {
         inputNumber(parseInt(e.key));
     } else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') {
-        e.preventDefault(); // STOP browser from going back
+        e.preventDefault();
         inputNumber(0);
     }
 });
