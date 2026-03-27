@@ -12,6 +12,9 @@ function startGame(difficulty) {
     currentPuzzle = game.generate(difficulty);
     initialGrid = [...currentPuzzle];
     renderGrid();
+
+    // Add to history so browser back button works
+    history.pushState({ screen: 'game' }, '');
 }
 
 function showHome() {
@@ -19,12 +22,19 @@ function showHome() {
     document.getElementById('game-screen').classList.add('hidden');
 }
 
+// Handle browser back button
+window.onpopstate = function(event) {
+    showHome();
+};
+
 function renderGrid() {
     const gridDiv = document.getElementById('sudoku-grid');
     gridDiv.innerHTML = '';
     for (let i = 0; i < 81; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
+        
+        // If 0, it stays empty
         if (currentPuzzle[i] !== 0) {
             cell.innerText = currentPuzzle[i];
             if (initialGrid[i] !== 0) {
@@ -32,8 +42,12 @@ function renderGrid() {
             } else {
                 cell.classList.add('user-val');
             }
+        } else {
+            cell.innerText = ''; // Explicitly clear
         }
+
         if (selectedCell === i) cell.classList.add('selected');
+        
         cell.addEventListener('click', () => {
             if (initialGrid[i] === 0) {
                 selectedCell = i;
