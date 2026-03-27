@@ -57,3 +57,15 @@ function inputNumber(num) {
         }
     }
 }
+
+// Keyboard support
+document.addEventListener('keydown', (e) => {
+    if (document.getElementById('game-screen').classList.contains('hidden')) return;
+    if (selectedCell === null) return;
+
+    if (e.key >= '1' && e.key <= '9') {
+        inputNumber(parseInt(e.key));
+    } else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') {
+        inputNumber(0);
+    }
+});
