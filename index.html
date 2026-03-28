@@ -11,14 +11,13 @@
     <title>Sudoku Pro (STABLE)</title>
     
     <!-- Versioned CSS to force refresh -->
-    <link rel="stylesheet" href="css/styles.css?v=1.0.1">
+    <link rel="stylesheet" href="css/styles.css?v=1.0.2">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script>
         // SERVICE WORKER KILLER (Fixes the "Ghost Version" bug)
-        // This script runs immediately and unregisters any old saved versions
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
                 for(let registration of registrations) {
@@ -26,7 +25,6 @@
                 }
             });
         }
-        // Force-clear any old application cache
         if (window.caches) {
             caches.keys().then(function(names) {
                 for (let name of names) caches.delete(name);
@@ -39,7 +37,7 @@
         <!-- Home Screen -->
         <div id="home-screen" class="screen">
             <h1>Sudoku</h1>
-            <p>Pick a challenge (STABLE)</p>
+            <p>Pick a challenge (STABLE-VERSION)</p>
             <div class="menu-buttons">
                 <button class="menu-btn easy" onclick="startGame('easy')">Easy</button>
                 <button class="menu-btn medium" onclick="startGame('medium')">Medium</button>
@@ -51,7 +49,9 @@
         <div id="game-screen" class="screen hidden">
             <div class="game-header">
                 <button class="back-btn" onclick="showHome()">← Back</button>
-                <div class="game-info">
+                <div class="header-right">
+                    <button class="action-btn hint-btn" onclick="giveHint()" title="Hint">💡</button>
+                    <button class="action-btn solve-btn" onclick="solveGame()">Solve</button>
                     <span id="difficulty-label">Easy</span>
                 </div>
             </div>
@@ -71,10 +71,19 @@
                 <button onclick="inputNumber(0)">⌫</button>
             </div>
         </div>
+
+        <!-- Success Overlay -->
+        <div id="success-overlay" class="overlay hidden">
+            <div class="success-content">
+                <div class="check-mark">✓</div>
+                <h2>Success!</h2>
+                <button class="menu-btn easy" onclick="showHome()">Main Menu</button>
+            </div>
+        </div>
     </div>
 
     <!-- Versioned JS to force refresh -->
-    <script src="js/sudoku.js?v=1.0.1"></script>
-    <script src="js/ui.js?v=1.0.1"></script>
+    <script src="js/sudoku.js?v=1.0.2"></script>
+    <script src="js/ui.js?v=1.0.2"></script>
 </body>
 </html>

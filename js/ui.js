@@ -3,6 +3,7 @@ let currentPuzzle = [];
 let initialGrid = [];
 let selectedCell = null;
 let currentDifficulty = '';
+let hintsUsed = [];
 
 window.onload = () => {
     const saved = localStorage.getItem('sudoku_save');
@@ -12,6 +13,7 @@ window.onload = () => {
         initialGrid = data.initialGrid;
         currentDifficulty = data.difficulty;
         game.solution = data.solution;
+        hintsUsed = data.hintsUsed || [];
         
         applyGameUI(currentDifficulty);
         renderGrid();
@@ -24,6 +26,7 @@ function applyHomeUI() {
     document.body.className = 'home-bg';
     document.getElementById('home-screen').classList.remove('hidden');
     document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('success-overlay').classList.add('hidden');
 }
 
 function applyGameUI(difficulty) {
@@ -33,7 +36,7 @@ function applyGameUI(difficulty) {
     
     const label = document.getElementById('difficulty-label');
     label.innerText = difficulty.toUpperCase();
-    label.className = ''; // Reset classes
+    label.className = '';
     label.classList.add(difficulty);
 }
 
@@ -42,7 +45,8 @@ function saveGame() {
         currentPuzzle,
         initialGrid,
         difficulty: currentDifficulty,
-        solution: game.solution
+        solution: game.solution,
+        hintsUsed
     }));
 }
 
@@ -51,6 +55,7 @@ function startGame(difficulty) {
     applyGameUI(difficulty);
     
     selectedCell = null;
+    hintsUsed = [];
     currentPuzzle = game.generate(difficulty);
     initialGrid = [...currentPuzzle];
     saveGame();
@@ -79,6 +84,8 @@ function renderGrid() {
             cell.innerText = currentPuzzle[i];
             if (initialGrid[i] !== 0) {
                 cell.classList.add('fixed');
+            } else if (hintsUsed.includes(i)) {
+                cell.classList.add('hint-val');
             } else {
                 cell.classList.add('user-val');
             }
@@ -101,15 +108,48 @@ function renderGrid() {
 function inputNumber(num) {
     if (selectedCell === null) return;
     currentPuzzle[selectedCell] = num;
+    // If user inputs manually, it's no longer a 'hint' cell
+    const hintIdx = hintsUsed.indexOf(selectedCell);
+    if (hintIdx > -1) hintsUsed.splice(hintIdx, 1);
+    
     saveGame();
     renderGrid();
+    checkWin();
+}
+
+function giveHint() {
+    if (selectedCell === null) {
+        alert("Please select an empty cell first!");
+        return;
+    }
+    if (initialGrid[selectedCell] !== 0) return;
+
+    const correctVal = game.solution[selectedCell];
+    currentPuzzle[selectedCell] = correctVal;
+    if (!hintsUsed.includes(selectedCell)) hintsUsed.push(selectedCell);
     
+    saveGame();
+    renderGrid();
+    checkWin();
+}
+
+function solveGame() {
+    if (confirm("Are you sure you want to reveal the full solution?")) {
+        currentPuzzle = [...game.solution];
+        renderGrid();
+        setTimeout(() => {
+            alert("Game Over - Solution Revealed");
+            showHome();
+        }, 500);
+    }
+}
+
+function checkWin() {
     if (!currentPuzzle.includes(0)) {
         if (currentPuzzle.every((val, i) => val === game.solution[i])) {
             setTimeout(() => {
-                alert('Success!');
-                showHome();
-            }, 100);
+                document.getElementById('success-overlay').classList.remove('hidden');
+            }, 200);
         }
     }
 }
