@@ -8,16 +8,15 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <title>Sudoku Pro (STABLE)</title>
+    <title>Sudoku Pro</title>
     
     <!-- Versioned CSS to force refresh -->
-    <link rel="stylesheet" href="css/styles.css?v=1.0.2">
+    <link rel="stylesheet" href="css/styles.css?v=1.0.3">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script>
-        // SERVICE WORKER KILLER (Fixes the "Ghost Version" bug)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
                 for(let registration of registrations) {
@@ -37,7 +36,7 @@
         <!-- Home Screen -->
         <div id="home-screen" class="screen">
             <h1>Sudoku</h1>
-            <p>Pick a challenge (STABLE-VERSION)</p>
+            <p>Pick a challenge</p>
             <div class="menu-buttons">
                 <button class="menu-btn easy" onclick="startGame('easy')">Easy</button>
                 <button class="menu-btn medium" onclick="startGame('medium')">Medium</button>
@@ -47,6 +46,9 @@
 
         <!-- Game Screen -->
         <div id="game-screen" class="screen hidden">
+            <!-- Hidden input to trigger native keyboard on mobile -->
+            <input type="number" id="mobile-input" pattern="[0-9]*" inputmode="numeric" style="position: absolute; opacity: 0; pointer-events: none; top: 0; left: 0; width: 1px; height: 1px;">
+            
             <div class="game-header">
                 <button class="back-btn" onclick="showHome()">← Back</button>
                 <div class="header-right">
@@ -83,7 +85,7 @@
     </div>
 
     <!-- Versioned JS to force refresh -->
-    <script src="js/sudoku.js?v=1.0.2"></script>
-    <script src="js/ui.js?v=1.0.2"></script>
+    <script src="js/sudoku.js?v=1.0.3"></script>
+    <script src="js/ui.js?v=1.0.3"></script>
 </body>
 </html>

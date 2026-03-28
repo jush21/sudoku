@@ -20,6 +20,16 @@ window.onload = () => {
     } else {
         applyHomeUI();
     }
+
+    // Setup mobile hidden input
+    const mobileInput = document.getElementById('mobile-input');
+    mobileInput.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value.slice(-1));
+        if (!isNaN(val)) {
+            inputNumber(val);
+        }
+        e.target.value = ''; // Reset for next input
+    });
 };
 
 function applyHomeUI() {
@@ -99,6 +109,8 @@ function renderGrid() {
             if (initialGrid[i] === 0) {
                 selectedCell = i;
                 renderGrid();
+                // Trigger mobile keyboard
+                document.getElementById('mobile-input').focus();
             }
         });
         gridDiv.appendChild(cell);
@@ -108,7 +120,6 @@ function renderGrid() {
 function inputNumber(num) {
     if (selectedCell === null) return;
     currentPuzzle[selectedCell] = num;
-    // If user inputs manually, it's no longer a 'hint' cell
     const hintIdx = hintsUsed.indexOf(selectedCell);
     if (hintIdx > -1) hintsUsed.splice(hintIdx, 1);
     
