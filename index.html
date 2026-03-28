@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sudoku Pro (STABLE)</title>
+    <link rel="stylesheet" href="css/styles_v3.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="home-bg">
+    <div class="container">
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen">
+            <h1>Sudoku</h1>
+            <p>Pick a challenge (STABLE)</p>
+            <div class="menu-buttons">
+                <button class="menu-btn easy" onclick="startGame('easy')">Easy</button>
+                <button class="menu-btn medium" onclick="startGame('medium')">Medium</button>
+                <button class="menu-btn hard" onclick="startGame('hard')">Hard</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <div class="game-header">
+                <button class="back-btn" onclick="showHome()">← Back</button>
+                <div class="game-info">
+                    <span id="difficulty-label">Easy</span>
+                </div>
+            </div>
+            
+            <div id="sudoku-grid" class="grid"></div>
+
+            <div class="number-pad">
+                <button onclick="inputNumber(1)">1</button>
+                <button onclick="inputNumber(2)">2</button>
+                <button onclick="inputNumber(3)">3</button>
+                <button onclick="inputNumber(4)">4</button>
+                <button onclick="inputNumber(5)">5</button>
+                <button onclick="inputNumber(6)">6</button>
+                <button onclick="inputNumber(7)">7</button>
+                <button onclick="inputNumber(8)">8</button>
+                <button onclick="inputNumber(9)">9</button>
+                <button onclick="inputNumber(0)">⌫</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sudoku.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
